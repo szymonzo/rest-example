@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(HttpServletRequest httpServletRequest, Long id) {
         User user = this.userRepository.findOne(id);
-        checkCorrelationBetweenUserIdAndIdSendedByClient(user);
+        checkCorrelationBetweenUserIdAndIdSendedByClient(user,httpServletRequest);
         return this.userRepository.findOne(id);
     }
 
@@ -33,13 +33,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(HttpServletRequest httpServletRequest, Long id) {
         User user = this.userRepository.findOne(id);
-        checkCorrelationBetweenUserIdAndIdSendedByClient(user);
+        checkCorrelationBetweenUserIdAndIdSendedByClient(user,httpServletRequest);
         this.userRepository.delete(user);
     }
 
-    private void checkCorrelationBetweenUserIdAndIdSendedByClient(User user) {
-        Long id = tokenUtil.getCoreUserIdFromToken(user.getToken().getSessionToken(), user.getToken().getSecret());
-        if (!user.getId().equals(id)) {
+    private void checkCorrelationBetweenUserIdAndIdSendedByClient(User user,HttpServletRequest httpServletRequest) {
+       String token = httpServletRequest.getHeader("tokenUUID");
+        User userDB = userRepository.findOneByToken_SessionToken(token);
+        if (!user.getId().equals(userDB.getId())) {
             throw new ServiceException(ApiResponseStatus.INTERNAL_SERVER_ERROR);
         }
     }

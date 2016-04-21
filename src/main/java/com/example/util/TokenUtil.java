@@ -43,11 +43,7 @@ public class TokenUtil {
         return token;
     }
 
-    public void checkSessionToken(String token) {
-        User user = userRepository.findOneByToken_SessionToken(token);
-        if (user == null) {
-            throw new ServiceException(ApiResponseStatus.AUTHENTICATION_FAUILURE);
-        }
+    public void checkSessionToken(String token, User user) {
         try {
             Jwts.parser().setSigningKey(user.getToken().getSecret()).parseClaimsJws(token);
         } catch (SignatureException | ExpiredJwtException e1) {
