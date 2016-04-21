@@ -25,6 +25,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(HttpServletRequest httpServletRequest, Long id) {
         User user = this.userRepository.findOne(id);
+        if(user == null){
+            throw new ServiceException(ApiResponseStatus.USER_NOT_FOUND);
+        }
         checkCorrelationBetweenUserIdAndIdSendedByClient(user,httpServletRequest);
         return this.userRepository.findOne(id);
     }
