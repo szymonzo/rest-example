@@ -1,16 +1,16 @@
 package com.example.service;
 
-import com.example.entity.User;
+import com.example.entity.db.User;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by szymon on 21.04.16.
  */
 public interface UserService {
 
-    List<User> getUsers();
-    User getUser();
-    void deleteUser();
-    void updateUser();
+    User getUser(HttpServletRequest httpServletRequest,Long id);
+
+    void deleteUser(HttpServletRequest httpServletRequest,Long id);
+
 }

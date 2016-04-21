@@ -1,6 +1,6 @@
 package com.example.repository;
 
-import com.example.entity.User;
+import com.example.entity.db.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,4 +10,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    User findOneByLoginAndPassword(String login, String password);
+
+    User findOneByToken_SessionToken(String sessionToken);
 }

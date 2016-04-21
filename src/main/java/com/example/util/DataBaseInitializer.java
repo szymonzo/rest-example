@@ -1,6 +1,6 @@
 package com.example.util;
 
-import com.example.entity.User;
+import com.example.entity.db.User;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -31,13 +31,15 @@ public class DataBaseInitializer implements ApplicationListener<ContextRefreshed
 
     private void initializeUsers() {
         User adam = new User();
+        adam.setLogin("jestemAdam");
         adam.setName("Adam");
         adam.setPassword("adam123");
         userRepository.save(adam);
 
         User kamil = new User();
-        adam.setName("kamil");
-        adam.setPassword("kamil123");
-        userRepository.save(adam);
+        kamil.setName("kamil");
+        kamil.setPassword("kamil123");
+        kamil.setLogin("jestemKamil");
+        userRepository.save(kamil);
     }
 }

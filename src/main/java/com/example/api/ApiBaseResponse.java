@@ -8,13 +8,17 @@ import java.util.Date;
  * Created by szymon on 21.04.16.
  */
 public class ApiBaseResponse<T> {
+
+
+
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private ApiResponseStatus status;
+
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private T data;
 
     private Date timeStamp;
-
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private ApiResponseStatus status;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String message;
@@ -28,6 +32,9 @@ public class ApiBaseResponse<T> {
     public ApiBaseResponse(ApiResponseStatus status) {
         this.status = status;
         this.timeStamp = new Date();
+    }
+
+    public ApiBaseResponse( ) {
     }
 
     public T getData() {
@@ -60,5 +67,16 @@ public class ApiBaseResponse<T> {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("ApiBaseResponse{");
+        sb.append("data=").append(data);
+        sb.append(", timeStamp=").append(timeStamp);
+        sb.append(", status=").append(status);
+        sb.append(", message='").append(message).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

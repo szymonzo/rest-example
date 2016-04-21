@@ -1,9 +1,8 @@
-package com.example.entity;
+package com.example.entity.db;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.example.entity.db.Token;
+
+import javax.persistence.*;
 
 /**
  * Created by szymon on 21.04.16.
@@ -18,11 +17,16 @@ public class User {
     private Long id;
 
     @Column
+    private String login;
+
+    @Column
     private String name;
 
     @Column
     private String password;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Token token;
 
     public Long getId() {
         return id;
@@ -30,6 +34,14 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getName() {
@@ -46,5 +58,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Token getToken() {
+        return token;
+    }
+
+    public void setToken(Token token) {
+        this.token = token;
     }
 }
